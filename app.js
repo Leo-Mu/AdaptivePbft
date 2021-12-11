@@ -11,13 +11,14 @@ const CommitPool = require("./commit-pool");
 const PreparePool = require("./prepare-pool");
 const MessagePool = require("./message-pool");
 const { NUMBER_OF_NODES } = require("./config");
-const HTTP_PORT = process.env.HTTP_PORT || 3001;
+const { THIS_NODE } = require("./config");
+const HTTP_PORT = 3000 + THIS_NODE;
 
 // Instantiate all objects
 const app = express();
 app.use(bodyParser.json());
 
-const wallet = new Wallet(process.env.SECRET);
+const wallet = new Wallet("NODE" + THIS_NODE);
 const transactionPool = new TransactionPool();
 const validators = new Validators(NUMBER_OF_NODES);
 const blockchain = new Blockchain(validators);

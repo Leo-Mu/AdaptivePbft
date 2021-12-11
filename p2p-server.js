@@ -3,14 +3,21 @@ const WebSocket = require("ws");
 
 // import the min approval constant which will be used to compare the count the messages
 const { MIN_APPROVALS } = require("./config");
+const { THIS_NODE } = require("./config");
 
 // decalre a p2p server port on which it would listen for messages
 // we will pass the port through command line
-const P2P_PORT = process.env.P2P_PORT || 5001;
+const P2P_PORT = 5000 + THIS_NODE;
 
 // the neighbouring nodes socket addresses will be passed in command line
 // this statemet splits them into an array
-const peers = process.env.PEERS ? process.env.PEERS.split(",") : [];
+const peers = (() => {
+  let out = [];
+  for (let i = 0; i < THIS_NODE; i++) {
+    out.push(i);
+  }
+  return out;
+})();
 
 // message types used to avoid typing messages
 // also used in swtich statement in message handlers
@@ -65,7 +72,7 @@ class P2pserver {
   // connects to the peers passed in command line
   connectToPeers() {
     peers.forEach(peer => {
-      const socket = new WebSocket(peer);
+      const socket = new WebSocket("ws://localhost:" + peer);
       socket.on("open", () => this.connectSocket(socket));
     });
   }

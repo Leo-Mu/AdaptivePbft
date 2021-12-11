@@ -7,8 +7,20 @@ const NUMBER_OF_NODES = 3;
 // Minmu number of positive votes required for the message/block to be valid
 const MIN_APPROVALS = 2 * (NUMBER_OF_NODES / 3) + 1;
 
+//this node number
+const THIS_NODE = parseInt(process.env.THIS_NODE) || 0;
+
+//latency
+const LATENCY_MATRIX = [
+  [100, 100, 100],
+  [100, 100, 100],
+  [100, 100, 100]
+]
+
 module.exports = {
   TRANSACTION_THRESHOLD,
   NUMBER_OF_NODES,
-  MIN_APPROVALS
+  MIN_APPROVALS,
+  LATENCY_MATRIX,
+  THIS_NODE
 };
