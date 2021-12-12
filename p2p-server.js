@@ -72,7 +72,7 @@ class P2pserver {
   // connects to the peers passed in command line
   connectToPeers() {
     peers.forEach(peer => {
-      const socket = new WebSocket("ws://localhost:" + peer);
+      const socket = new WebSocket("ws://localhost:" + (5000 + peer));
       socket.on("open", () => this.connectSocket(socket));
     });
   }
